@@ -79,22 +79,6 @@ section{padding:70px 0 10px}
 .sec-head h2 em{font-style:italic;font-weight:400;color:var(--moss)}
 .sec-head p{color:var(--muted);font-size:15px;margin-top:8px;max-width:560px;line-height:1.7}
 .sec-no{font-family:'Fraunces',serif;font-size:15px;letter-spacing:3px;color:var(--gold);font-weight:700;white-space:nowrap;border:1px solid var(--line);padding:9px 18px;border-radius:100px;background:var(--card)}
-/* ---------- STORY STRIP ---------- */
-.strip{display:grid;grid-template-columns:1.05fr .95fr;gap:22px;align-items:stretch}
-@media(max-width:900px){.strip{grid-template-columns:1fr}}
-.story-card{position:relative;border-radius:var(--r);overflow:hidden;min-height:420px;display:flex;align-items:flex-end;box-shadow:var(--shadow);cursor:pointer;border:0;padding:0;width:100%;text-align:left;font-family:inherit}
-.story-card img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s ease}
-.story-card:hover img.bg{transform:scale(1.05)}
-.story-card::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,18,13,0) 30%,rgba(10,18,13,.82) 100%)}
-.story-body{position:relative;z-index:2;padding:26px;color:#fff;width:100%}
-.story-body .tag{display:inline-block;font-size:12px;letter-spacing:2px;font-weight:700;color:#231a05;background:var(--gold2);padding:6px 14px;border-radius:100px;margin-bottom:10px}
-.story-body h3{font-family:'Fraunces',serif;font-size:clamp(26px,3.4vw,40px);font-weight:900;line-height:1.05}
-.story-body p{font-size:14.5px;color:#e8e4d2;margin-top:8px;font-weight:300;line-height:1.65}
-.story-foot{display:flex;align-items:center;justify-content:space-between;margin-top:14px}
-.dist-pill{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(8px);padding:8px 15px;border-radius:100px;font-size:13px;font-weight:600}
-.circle-btn{width:52px;height:52px;border-radius:50%;background:#fff;color:var(--ink);display:grid;place-items:center;font-size:20px;transition:.25s}
-.story-card:hover .circle-btn{background:var(--gold);transform:rotate(-45deg)}
-.side-stack{display:flex;flex-direction:column;gap:22px}
 .hotel-panel{background:var(--moss2);color:#f2ecdb;border-radius:var(--r);padding:28px;box-shadow:var(--shadow);position:relative;overflow:hidden}
 .hotel-panel::before{content:'🏡';position:absolute;right:-10px;bottom:-30px;font-size:150px;opacity:.12}
 .hotel-panel .kicker{color:var(--gold2)}
@@ -118,7 +102,7 @@ section{padding:70px 0 10px}
 .vibe-chip:hover{transform:translateY(-2px);border-color:var(--moss)}
 .vibe-chip.active{background:var(--moss);color:#fff;border-color:var(--moss)}
 #vibe-hint{margin-top:14px;font-size:14.5px;color:var(--muted)}
-/* ---------- EDITORIAL CARDS ---------- */
+/* ---------- CAFE CARDS ---------- */
 .ed-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
 @media(max-width:900px){.ed-grid{grid-template-columns:1fr}}
 .ed-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:0 14px 40px rgba(29,64,48,.1);transition:.3s;display:flex;flex-direction:column}
@@ -293,26 +277,20 @@ footer .serif{font-size:20px;color:var(--moss2)}
         <p>เรียงจากใกล้ที่พักที่สุด • แตะรูปเพื่อเปิดแกลเลอรี รีวิว แผนที่ร้าน และปุ่มนำทางของร้านนั้น</p>
       </div>
     </div>
-    <div class="strip reveal">
-      <button class="story-card" id="feature-card" aria-label="เปิดเรื่องราวร้านแนะนำ"></button>
-      <div class="side-stack">
-        <div class="hotel-panel">
-          <span class="kicker">YOUR BASECAMP</span>
-          <h3>🏠 เดอะ ซีรีย์ รีสอร์ท เขาใหญ่</h3>
-          <p>161/1 ม.3 ถ.ผันสุก-กุดคล้า ต.พญาเย็น อ.ปากช่อง<br>📍 14.5597, 101.3028 — จุดเริ่มต้นของทุกเส้นทาง</p>
-          <div class="hotel-btns">
-            <a class="btn btn-gold" target="_blank" href="https://maps.app.goo.gl/3c4dfXoW9xRdxnZM6?g_st=i">📍 เปิดที่พัก</a>
-            <a class="btn btn-ghost" href="#gmaps-section">🧭 เส้นทางนำทาง</a>
-          </div>
-          <div class="mini-stats">
-            <div><b>5</b><span>ตัวเลือก</span></div>
-            <div><b id="stat-near2">–</b><span>ใกล้สุด</span></div>
-            <div><b id="stat-far2">–</b><span>ไกลสุด</span></div>
-          </div>
-        </div>
+    <div class="hotel-panel reveal" style="margin-bottom:22px">
+      <span class="kicker">YOUR BASECAMP</span>
+      <h3>🏠 เดอะ ซีรีย์ รีสอร์ท เขาใหญ่</h3>
+      <p>161/1 ม.3 ถ.ผันสุก-กุดคล้า ต.พญาเย็น อ.ปากช่อง<br>📍 14.5597, 101.3028 — จุดเริ่มต้นของทุกเส้นทาง</p>
+      <div class="hotel-btns">
+        <a class="btn btn-gold" target="_blank" href="https://maps.app.goo.gl/3c4dfXoW9xRdxnZM6?g_st=i">📍 เปิดที่พัก</a>
+        <a class="btn btn-ghost" href="#gmaps-section">🧭 เส้นทางนำทาง</a>
+      </div>
+      <div class="mini-stats">
+        <div><b>5</b><span>ตัวเลือก</span></div>
+        <div><b id="stat-near2">–</b><span>ใกล้สุด</span></div>
+        <div><b id="stat-far2">–</b><span>ไกลสุด</span></div>
       </div>
     </div>
-    <div style="height:22px"></div>
     <div class="ed-grid" id="cards"></div>
   </section>
 
@@ -539,7 +517,7 @@ function locateMe(){
   },()=>toast('❌ เปิด GPS ไม่ได้ — กรุณาอนุญาต Location ในเบราว์เซอร์'),{enableHighAccuracy:true,timeout:12000});
 }
 
-// ============ EDITORIAL CARDS ============
+// ============ CAFE CARDS ============
 document.getElementById('cards').innerHTML = PLACES.map((p,i)=>`
  <article class="ed-card reveal in" id="cafe-${p.id}">
   <div class="ed-photo" onclick="openModal(${p.id})">
@@ -565,17 +543,6 @@ document.getElementById('cards').innerHTML = PLACES.map((p,i)=>`
     </div>
   </div>
  </article>`).join('');
-
-// feature story card = ร้านที่ 2 (เรียงตามระยะหลัง sort)
-(function(){
-  const f = PLACES[1] || PLACES[0];
-  document.getElementById('feature-card').innerHTML = `
-    <img class="bg" src="${f.photos[0]}" alt="${f.name}" onerror="this.remove()">
-    <span class="story-body"><span class="tag">✦ EDITOR'S PICK — ตัวเลือกที่ 2</span>
-    <h3>${f.emoji} ${f.name}</h3><p>${f.desc} — ห่างที่พักเพียง ${f.km.toFixed(1)} กม. แตะเพื่อเปิดเรื่องราวฉบับเต็ม</p>
-    <span class="story-foot"><span class="dist-pill">📏 ${f.km.toFixed(1)} กม. • ⏱ ~${timeEst(f.km)}</span><span class="circle-btn">→</span></span></span>`;
-  document.getElementById('feature-card').onclick = ()=>openModal(f.id);
-})();
 
 // hero slideshow = รูปจริง 5 ร้าน
 document.getElementById('hero-slides').innerHTML = PLACES.map((p,i)=>`<img src="${p.photos[0]}" class="${i===0?'on':''}" alt="" referrerpolicy="no-referrer" loading="${i===0?'eager':'lazy'}">`).join('');
