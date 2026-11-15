@@ -102,39 +102,40 @@ section{padding:70px 0 10px}
 .vibe-chip:hover{transform:translateY(-2px);border-color:var(--moss)}
 .vibe-chip.active{background:var(--moss);color:#fff;border-color:var(--moss)}
 #vibe-hint{margin-top:14px;font-size:14.5px;color:var(--muted)}
-/* ---------- CAFE CARDS ---------- */
+/* ---------- CAFE CARDS (full-bleed photo story cards) ---------- */
 .ed-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
 @media(max-width:900px){.ed-grid{grid-template-columns:1fr}}
-.ed-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:0 14px 40px rgba(29,64,48,.1);transition:.3s;display:flex;flex-direction:column}
+.ed-card{position:relative;border-radius:var(--r);overflow:hidden;min-height:560px;display:flex;align-items:flex-end;
+  box-shadow:0 14px 40px rgba(29,64,48,.14);transition:.3s;border:0;padding:0;width:100%;text-align:left;font-family:inherit;cursor:pointer;color:#fff}
 .ed-card:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
 .ed-card.dim{opacity:.28;filter:grayscale(.85);transform:scale(.985)}
-.ed-photo{position:relative;height:300px;overflow:hidden;cursor:pointer}
-.ed-photo img{width:100%;height:100%;object-fit:cover;transition:transform 1s ease}
-.ed-card:hover .ed-photo img{transform:scale(1.06)}
-.ed-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(10,18,13,.55) 100%)}
-.ed-no{position:absolute;top:16px;left:16px;z-index:2;background:rgba(255,253,247,.94);font-weight:800;font-size:13px;padding:8px 16px;border-radius:100px;box-shadow:0 6px 16px rgba(0,0,0,.2)}
-.ed-view{position:absolute;bottom:14px;right:14px;z-index:2;background:rgba(10,18,13,.6);color:#fff;backdrop-filter:blur(8px);font-size:12.5px;font-weight:700;padding:9px 16px;border-radius:100px;border:1px solid rgba(255,255,255,.3)}
-.ed-body{padding:24px 24px 26px;display:flex;flex-direction:column;gap:13px;flex:1}
-.ed-body h3{font-family:'Fraunces',serif;font-size:27px;font-weight:900;line-height:1.1}
-.ed-body h3 small{display:block;font-family:'Kanit';font-weight:400;font-size:13.5px;color:var(--muted);margin-top:4px}
-.ed-desc{font-size:15px;color:var(--ink2);line-height:1.7}
+.ed-card img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s ease}
+.ed-card:hover img.bg{transform:scale(1.05)}
+.ed-card::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,18,13,.05) 20%,rgba(10,18,13,.55) 55%,rgba(10,18,13,.92) 100%)}
+.ed-story{position:relative;z-index:2;padding:24px;width:100%;display:flex;flex-direction:column;gap:10px}
+.ed-no{align-self:flex-start;background:rgba(255,253,247,.94);color:var(--moss2);font-weight:800;font-size:12.5px;padding:8px 16px;border-radius:100px;box-shadow:0 6px 16px rgba(0,0,0,.25)}
+.ed-story h3{font-family:'Fraunces',serif;font-size:clamp(26px,3vw,36px);font-weight:900;line-height:1.02;text-shadow:0 4px 24px rgba(0,0,0,.4)}
+.ed-story h3 small{display:block;font-family:'Kanit';font-weight:400;font-size:13.5px;color:#e8e4d2;margin-top:4px}
+.ed-desc{font-size:14.5px;color:#ece7d4;font-weight:300;line-height:1.65}
 .tags{display:flex;gap:8px;flex-wrap:wrap}
-.tag{font-size:12.5px;font-weight:600;padding:6px 13px;border-radius:100px;background:#eef3e6;color:var(--moss)}
-.tag.gold{background:var(--goldsoft);color:#8a5d00;border:1px solid #ecd9a4}
-.facts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-@media(max-width:520px){.facts{grid-template-columns:1fr}}
-.fact{background:#f6f1e2;border-radius:15px;padding:12px 14px;font-size:13.5px;line-height:1.6}
-.fact b{display:block;font-size:11.5px;letter-spacing:1.5px;color:var(--gold);margin-bottom:2px}
-.route-bar{display:flex;align-items:center;gap:12px;background:var(--moss2);color:#fff;border-radius:16px;padding:14px 16px}
-.route-bar .km{font-family:'Fraunces',serif;font-size:30px;font-weight:900;color:var(--gold2)}
-.route-bar small{font-size:12px;color:#c9d2c0;line-height:1.5}
-.ed-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:auto}
-.ed-btns a{text-align:center;padding:13px;border-radius:14px;font-weight:700;font-size:14px;transition:.2s}
-.ed-btns a:hover{transform:translateY(-2px)}
+.tag{font-size:12px;font-weight:600;padding:6px 13px;border-radius:100px;background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(6px)}
+.tag.gold{background:var(--gold2);color:#231a05;border:0}
+.ed-facts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:520px){.ed-facts{grid-template-columns:1fr}}
+.ed-fact{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(8px);border-radius:14px;padding:10px 13px;font-size:13px;line-height:1.55}
+.ed-fact b{display:block;font-size:10.5px;letter-spacing:2px;color:var(--gold2);margin-bottom:2px}
+.ed-route{display:flex;align-items:center;gap:12px}
+.ed-route .km{font-family:'Fraunces',serif;font-size:34px;font-weight:900;color:var(--gold2);text-shadow:0 4px 18px rgba(0,0,0,.4)}
+.ed-route small{font-size:12px;color:#dfe4d4;line-height:1.5}
+.ed-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:2px}
+.ed-btns button,.ed-btns a{text-align:center;padding:13px 10px;border-radius:13px;font-weight:700;font-size:13.5px;transition:.2s;font-family:inherit;cursor:pointer;border:0}
+.ed-btns button:hover,.ed-btns a:hover{transform:translateY(-2px)}
 .ed-btns .full{grid-column:1/-1}
 .go-nav{background:var(--blue);color:#fff !important}
-.go-ghost{background:#f1ead6;color:var(--moss2) !important}
-.go-ink{background:var(--ink);color:#fff !important}
+.go-ghost{background:rgba(255,253,247,.94);color:var(--moss2) !important}
+.go-ink{background:rgba(10,18,13,.65);color:#fff !important;border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(6px)}
+.ed-open{position:absolute;top:16px;right:16px;z-index:2;width:52px;height:52px;border-radius:50%;background:#fff;color:var(--ink);display:grid;place-items:center;font-size:20px;transition:.25s;border:0;cursor:pointer}
+.ed-card:hover .ed-open{background:var(--gold);transform:rotate(-45deg)}
 /* ---------- MAP ---------- */
 .map-shell{position:relative;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);border:8px solid #fffdf7}
 #map{height:560px;width:100%;z-index:1}
@@ -154,10 +155,10 @@ section{padding:70px 0 10px}
   #map{height:430px}
   .hero-inner{padding:110px 0 26px}
   .hero-cards{grid-template-columns:1fr}
-  .ed-photo{height:230px}
-  .ed-body{padding:20px}
-  .ed-body h3{font-size:23px}
-  .route-bar .km{font-size:26px}
+  .ed-card{min-height:600px}
+  .ed-story{padding:20px}
+  .ed-story h3{font-size:26px}
+  .ed-route .km{font-size:30px}
   .modal-hero{height:240px}
   .gmaps-frame iframe{height:380px}
   .sec-head{flex-direction:column;align-items:flex-start}
@@ -517,28 +518,26 @@ function locateMe(){
   },()=>toast('❌ เปิด GPS ไม่ได้ — กรุณาอนุญาต Location ในเบราว์เซอร์'),{enableHighAccuracy:true,timeout:12000});
 }
 
-// ============ CAFE CARDS ============
+// ============ CAFE CARDS (full-bleed photo story cards) ============
 document.getElementById('cards').innerHTML = PLACES.map((p,i)=>`
- <article class="ed-card reveal in" id="cafe-${p.id}">
-  <div class="ed-photo" onclick="openModal(${p.id})">
-    <img src="${p.photos[0]}" alt="${p.name}" loading="lazy" referrerpolicy="no-referrer">
+ <article class="ed-card" id="cafe-${p.id}">
+  <img class="bg" src="${p.photos[0]}" alt="${p.name}" loading="lazy" referrerpolicy="no-referrer">
+  <button class="ed-open" onclick="openModal(${p.id})" aria-label="เปิดเรื่องราว ${p.name}">→</button>
+  <div class="ed-story">
     <span class="ed-no">No.${i+1} — ${p.km.toFixed(1)} km from basecamp</span>
-    <span class="ed-view">View story →</span>
-  </div>
-  <div class="ed-body">
     <h3>${p.emoji} ${p.name}<small>${p.en}</small></h3>
     <p class="ed-desc">${p.desc}</p>
     <div class="tags">${p.tags.map(t=>`<span class="tag">${t}</span>`).join('')}<span class="tag gold">✓ พิกัดตรงจาก Google</span></div>
-    <div class="facts">
-      <div class="fact"><b>ADDRESS</b>📍 ${p.addr}</div>
-      <div class="fact"><b>BEST FOR</b>${p.best}</div>
+    <div class="ed-facts">
+      <div class="ed-fact"><b>ADDRESS</b>📍 ${p.addr}</div>
+      <div class="ed-fact"><b>BEST FOR</b>${p.best}</div>
     </div>
-    <div class="route-bar"><span class="km">${p.km.toFixed(1)}</span><small>กม. จากที่พัก (เส้นตรง)<br>ขับจริง ~${driveEst(p.km)} กม. • ⏱ ~${timeEst(p.km)}</small></div>
+    <div class="ed-route"><span class="km">${p.km.toFixed(1)}</span><small>กม. จากที่พัก (เส้นตรง)<br>ขับจริง ~${driveEst(p.km)} กม. • ⏱ ~${timeEst(p.km)}</small></div>
     <div class="ed-btns">
       <a class="go-nav" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=${HOTEL.lat},${HOTEL.lon}&destination=${encodeURIComponent(p.query)}">🧭 นำทาง</a>
       <a class="go-ghost" target="_blank" href="${p.link}">📍 หน้าร้าน</a>
-      <a class="go-ink full" href="javascript:void(0)" onclick="openModal(${p.id})">✨ เปิดเรื่องราว + รูป + รีวิวของร้านนี้</a>
-      <a class="go-ghost" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination=${encodeURIComponent(p.query)}">📡 จากจุดที่ฉันยืน</a>
+      <button class="go-ink full" onclick="openModal(${p.id})">✨ เปิดเรื่องราว + รูป + รีวิว</button>
+      <a class="go-ghost" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination=${encodeURIComponent(p.query)}">📡 จุดที่ฉันยืน</a>
       <a class="go-ghost" href="#gmaps-section" onclick="showRoute(${p.id})">🗺️ เส้นทางจริง</a>
     </div>
   </div>
