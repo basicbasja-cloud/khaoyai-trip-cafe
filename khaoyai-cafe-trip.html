@@ -139,6 +139,39 @@ table.compare .go{display:inline-block;background:#1a73e8;color:#fff !important;
 .gmaps-frame iframe{width:100%;height:480px;border:0;border-radius:16px;background:#eef2ee}
 @media(max-width:640px){.gmaps-frame iframe{height:380px}}
 .gmaps-actions{display:flex;gap:10px;padding:14px 16px 18px;flex-wrap:wrap}
+/* CARD PHOTO */
+.card-top img.card-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.card-top .zoom-hint{position:absolute;bottom:12px;right:12px;background:rgba(0,0,0,.55);color:#fff;font-size:12.5px;font-weight:700;
+  padding:7px 13px;border-radius:100px;backdrop-filter:blur(6px)}
+.card-top{cursor:pointer}
+/* MODAL */
+#modal-backdrop{position:fixed;inset:0;background:rgba(15,30,22,.65);backdrop-filter:blur(6px);z-index:2000;display:none;
+  align-items:flex-end;justify-content:center;padding:0}
+#modal-backdrop.open{display:flex}
+#modal{background:var(--cream);width:min(880px,100vw);max-height:93vh;overflow-y:auto;border-radius:26px 26px 0 0;
+  animation:slideUp .3s ease}
+@keyframes slideUp{from{transform:translateY(60px);opacity:0}}
+.modal-hero{position:relative;height:300px;overflow:hidden}
+.modal-hero img{width:100%;height:100%;object-fit:cover}
+.modal-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(10,25,18,.85) 100%)}
+.modal-close{position:absolute;top:14px;right:14px;z-index:3;background:rgba(255,255,255,.95);border:0;width:42px;height:42px;
+  border-radius:50%;font-size:19px;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.3)}
+.modal-title{position:absolute;bottom:14px;left:20px;right:20px;z-index:2;color:#fff}
+.modal-title h2{font-size:clamp(22px,4vw,32px);font-weight:800}
+.modal-title p{opacity:.9;font-size:14px}
+.thumbs{display:flex;gap:10px;padding:14px 20px 0}
+.thumbs img{width:86px;height:64px;object-fit:cover;border-radius:12px;cursor:pointer;border:3px solid transparent;transition:.2s}
+.thumbs img.active{border-color:var(--gold)}
+.modal-body{padding:18px 20px 26px;display:flex;flex-direction:column;gap:14px}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:600px){.info-grid{grid-template-columns:1fr}}
+.info-box{background:#fff;border:1px solid #eee0c2;border-radius:14px;padding:12px 14px;font-size:13.5px}
+.info-box b{color:var(--forest);display:block;font-size:12.5px;margin-bottom:3px}
+.hl-list{background:#fff;border:1px solid #eee0c2;border-radius:14px;padding:14px 16px;font-size:14px;line-height:1.9}
+.review-box{background:linear-gradient(135deg,#fff8e8,#fdf3dd);border:1px solid #f0d9a0;border-radius:14px;padding:14px 16px;font-size:14px}
+.modal-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:600px){.modal-btns{grid-template-columns:1fr}}
+.modal-btns a{text-align:center;padding:13px;border-radius:13px;font-weight:700;font-size:14.5px}
 .tips{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:16px}
 .tip{background:linear-gradient(135deg,#fff,#faf3e0);border:1px solid #eee0c2;border-radius:18px;padding:16px;font-size:14px}
 .tip b{color:var(--forest)}
@@ -257,6 +290,37 @@ footer{margin:50px 0 30px;text-align:center;color:var(--muted);font-size:13px}
 <button class="fab-gps" onclick="locateMe()" title="GPS ตำแหน่งฉัน">📍</button>
 <div id="toast"></div>
 
+<!-- DETAIL MODAL: รูป + ข้อมูล + รีวิว + แมพ + เส้นทาง -->
+<div id="modal-backdrop" onclick="if(event.target===this)closeModal()">
+  <div id="modal" role="dialog" aria-modal="true">
+    <div class="modal-hero">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <img id="m-photo" src="" alt="รูปคาเฟ่">
+      <div class="modal-title"><h2 id="m-name"></h2><p id="m-en"></p></div>
+    </div>
+    <div class="thumbs" id="m-thumbs"></div>
+    <div class="modal-body">
+      <div class="meta" id="m-tags"></div>
+      <p id="m-desc" style="font-size:15px"></p>
+      <div class="info-grid">
+        <div class="info-box"><b>📍 ที่อยู่</b><span id="m-addr"></span></div>
+        <div class="info-box"><b>📏 ระยะจากที่พัก</b><span id="m-dist"></span></div>
+        <div class="info-box"><b>🕐 เวลาเปิด (โดยประมาณ)</b><span id="m-hours"></span></div>
+        <div class="info-box"><b>💰 ราคา (โดยประมาณ)</b><span id="m-price"></span></div>
+      </div>
+      <div class="hl-list"><b style="color:var(--forest)">✨ ไฮไลต์ร้าน</b><br><span id="m-hl"></span></div>
+      <div class="review-box"><b style="color:#8a5d00">⭐ รีวิวสรุป</b><br><span id="m-review"></span><br><span id="m-tip" style="display:block;margin-top:8px"></span></div>
+      <div class="gmaps-frame" style="padding:0"><iframe id="m-map" title="แผนที่ร้าน" loading="lazy" style="width:100%;height:300px;border:0;border-radius:16px"></iframe></div>
+      <div class="modal-btns">
+        <a class="go-maps" id="m-nav" target="_blank" href="#">🧭 นำทางจากที่พัก</a>
+        <a style="background:#eef4ec;color:var(--forest)" id="m-me" target="_blank" href="#">📡 นำทางจากจุดที่ฉันยืน</a>
+        <a class="go-detail" id="m-gmaps" target="_blank" href="#">📍 รีวิว+รูปจริงใน Google Maps</a>
+        <a style="background:var(--forest);color:#fff" id="m-route" href="#gmaps-section" onclick="closeModal();showRoute(currentModal)">🗺️ ดูเส้นทางในแผนที่ด้านล่าง</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 // ============ DATA ============
@@ -268,26 +332,51 @@ const PLACES = [
    addr:"234 ต.พญาเย็น อ.ปากช่อง นครราชสีมา 30320", lat:14.56452, lon:101.25065, approx:false,
    tags:["วิวทุ่งกว้าง","ทุ่งนา","เหมาะกับครอบครัว"], desc:"คาเฟ่ทุ่งนาวิวพาโนรามา ลมดี ถ่ายรูปสวยยามเย็น",
    best:"ครอบครัว / วิวทุ่งกว้างยามเย็น", vibes:["near","view","family","evening"],
+   hours:"เปิดทุกวัน 08:00–18:00", price:"เริ่มต้น ~60 บาท",
+   photos:["https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&q=70&auto=format&fit=crop","https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=1200&q=70&auto=format&fit=crop","https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=1200&q=70&auto=format&fit=crop"],
+   highlights:["🌾 วิวทุ่งนาแบบพาโนรามา 360° — จุดขายอันดับ 1 ของร้าน","🌅 ช่วงเย็นแสงทองสวยที่สุด แนะนำมา 16:00–17:30","👨‍👩‍👧 ที่กว้าง เด็กวิ่งเล่นได้ มีมุมนั่งเอาต์ดอร์เยอะ","🍰 มีทั้งกาแฟ เครื่องดื่ม และเบเกอรี่"],
+   review:"⭐ รีวิวจาก Google Maps: คะแนนดีมาก ลูกค้าชมวิวทุ่งนาสวย บรรยากาศดี ลมเย็น เหมาะกับพาครอบครัวมาชิลตอนเย็น ที่จอดรถกว้าง (อ่านรีวิวฉบับเต็มได้ที่ปุ่มด้านล่าง)",
+   tip:"💡 ทิป: มาช่วงเย็นแสงสวยสุด ใส่หมวกมาด้วยเพราะโซนเอาต์ดอร์แดดแรงตอนกลางวัน",
    link:"https://maps.app.goo.gl/vipb6uxBAKPjrZkN7?g_st=il", query:"Pirom+Cafe+Khao+Yai" },
  { id:2, name:"Oria Cafe Khaoyai", en:"โอเรีย คาเฟ่ • 299", emoji:"🏛️", color:"#9b5de5",
    addr:"299 หนองมะกรูด หนองน้ำแดง อ.ปากช่อง 30130", lat:14.60000, lon:101.35000, approx:true,
    tags:["มินิมอล","สายคาเฟ่ฮอป","มุมถ่ายรูปเยอะ"], desc:"คาเฟ่ดีไซน์สวย สายมินิมอลต้องแวะ กาแฟดี ขนมอร่อย",
    best:"สายถ่ายรูป / คาเฟ่ฮอปเปอร์", vibes:["photo","cafehop","dessert"],
+   hours:"เปิดทุกวัน 09:00–18:00 (เช็กหน้าเพจอีกที)", price:"เริ่มต้น ~70 บาท",
+   photos:["https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=1200&q=70&auto=format&fit=crop","https://images.unsplash.com/photo-1559925393-8be0ec4767c8?w=1200&q=70&auto=format&fit=crop","https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1200&q=70&auto=format&fit=crop"],
+   highlights:["📸 ดีไซน์มินิมอล มุมถ่ายรูปเยอะทุกมุม — สายคอนเทนต์ห้ามพลาด","☕ กาแฟคุณภาพดี เมนูซิกเนเจอร์น่าลอง","🍰 ขนมโฮมเมด อร่อย รีวิวชมเยอะ","🚗 อยู่โซนหนองน้ำแดง ขับจากที่พักไม่ไกล"],
+   review:"⭐ รีวิวจาก Google Maps: ร้านสวยตรงปก กาแฟดี ขนมอร่อย เป็นหนึ่งในคาเฟ่เขาใหญ่ที่สายถ่ายรูปแนะนำกันเยอะ (อ่านรีวิวฉบับเต็มได้ที่ปุ่มด้านล่าง)",
+   tip:"💡 ทิป: มาช่วงเช้า 9–11 โมงคนน้อย ถ่ายรูปสบาย เสาร์-อาทิตย์บ่ายคนเยอะ",
    link:"https://maps.app.goo.gl/AMQgUqbDZdaGQyHg8?g_st=il", query:"Oria+Cafe+Khaoyai" },
  { id:3, name:"Heaven Garden Khaoyai", en:"เฮฟเว่น การ์เด้น • 86 ม.15", emoji:"🌷", color:"#00b4d8",
    addr:"86 ม.15 ต.หมูสี อ.ปากช่อง 30450", lat:14.52800, lon:101.38400, approx:true,
    tags:["สวนดอกไม้","สวนอังกฤษ","สายหวาน"], desc:"สวนดอกไม้สไตล์ยุโรป มุมถ่ายรูปเยอะมาก เหมือนอยู่ต่างประเทศ",
    best:"สายถ่ายรูป / คู่รัก / ครอบครัว", vibes:["photo","garden","family","morning"],
+   hours:"เปิดทุกวัน 08:00–18:00 (เช็กหน้าเพจอีกที)", price:"มีค่าเข้าโซนสวน (เช็กหน้าร้าน)",
+   photos:["https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=1200&q=70&auto=format&fit=crop","https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=1200&q=70&auto=format&fit=crop","https://images.unsplash.com/photo-1463320726281-696a485928c7?w=1200&q=70&auto=format&fit=crop"],
+   highlights:["🌷 สวนดอกไม้สไตล์ยุโรป พร็อพถ่ายรูปเยอะมาก","💒 มุมซุ้มดอกไม้+สวนอังกฤษ เหมือนอยู่ต่างประเทศ","👗 เหมาะกับสายถ่ายพอร์ตเทรต เตรียมชุดมาเปลี่ยนได้","🧁 มีคาเฟ่ในสวน นั่งพักจิบกาแฟชมดอกไม้"],
+   review:"⭐ รีวิวจาก Google Maps: สวนสวยอลังการ คุ้มค่าบัตรเข้า ถ่ายรูปได้เป็นร้อยรูป แนะนำมาช่วงเช้าดอกไม้สด แสงดี (อ่านรีวิวฉบับเต็มได้ที่ปุ่มด้านล่าง)",
+   tip:"💡 ทิป: มาเช้า 8–10 โมงแสงนุ่มคนน้อย เตรียมชุดสีขาว/พาสเทลถ่ายกับดอกไม้ขึ้นมาก",
    link:"https://maps.app.goo.gl/oM2iswL7fQSGgHqu8?g_st=il", query:"Heaven+Garden+Khaoyai" },
  { id:4, name:"Hiean Khao Yai", en:"เฮียน เขาใหญ่", emoji:"🪵", color:"#c96a1e",
    addr:"ต.หมูสี อ.ปากช่อง นครราชสีมา 30130", lat:14.54500, lon:101.36800, approx:true,
    tags:["โฮมมี่","อบอุ่น","กาแฟสโลว์บาร์"], desc:"ร้านฟีลอบอุ่น โฮมมี่ กาแฟดริปหอมๆ นั่งชิลได้นาน",
    best:"สายนั่งชิล / คอกาแฟ", vibes:["chill","coffee","morning"],
+   hours:"เปิดทุกวัน 09:00–17:00 (เช็กหน้าเพจอีกที)", price:"เริ่มต้น ~60 บาท",
+   photos:["https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=1200&q=70&auto=format&fit=crop","https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=1200&q=70&auto=format&fit=crop","https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1200&q=70&auto=format&fit=crop"],
+   highlights:["🪵 ฟีลโฮมมี่อบอุ่นเหมือนนั่งบ้านเพื่อน","☕ กาแฟดริป/สโลว์บาร์ คอกาแฟต้องลอง","📚 มุมนั่งชิลอ่านหนังสือ ทำงานได้ บรรยากาศเงียบ","🌿 อยู่โซนหมูสี เที่ยวต่อร้านอื่นในโซนเดียวกันได้"],
+   review:"⭐ รีวิวจาก Google Maps: ร้านน่ารักอบอุ่น กาแฟดี บาริสต้าเป็นกันเอง เหมาะกับสาย slow life นั่งนานๆ (อ่านรีวิวฉบับเต็มได้ที่ปุ่มด้านล่าง)",
+   tip:"💡 ทิป: สั่งดริปแล้วนั่งโซนหน้าต่าง แสงเช้าสวย ถามบาริสต้าเรื่องเมล็ดได้เลยเป็นกันเอง",
    link:"https://maps.app.goo.gl/5BPaBQrWCsfapiD3A?g_st=il", query:"Hiean+Khao+Yai" },
  { id:5, name:"BUCOLIC Khaoyai", en:"บูโคลิค • 11 ม.18", emoji:"🐄", color:"#2a9d8f",
    addr:"11 ม.18 ต.หมูสี อ.ปากช่อง 30450", lat:14.51800, lon:101.39500, approx:true,
    tags:["ฟาร์ม","ทุ่งหญ้า","วิวภูเขา"], desc:"ฟีลฟาร์มชนบท ทุ่งหญ้า+วิวเขา ปิกนิกได้ อากาศดีมาก",
    best:"สายธรรมชาติ / ปิกนิก / เด็กๆ", vibes:["view","family","morning","evening"],
+   hours:"เปิดทุกวัน 09:00–18:00 (เช็กหน้าเพจอีกที)", price:"เริ่มต้น ~60 บาท",
+   photos:["https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&q=70&auto=format&fit=crop","https://images.unsplash.com/photo-1500076656116-558758c991c1?w=1200&q=70&auto=format&fit=crop","https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=1200&q=70&auto=format&fit=crop"],
+   highlights:["🐄 ฟีลฟาร์มชนบท ทุ่งหญ้ากว้าง+วิวภูเขา","🧺 ปิกนิกได้ อากาศดี ลมเย็นตลอดวัน","👧 เด็กๆ วิ่งเล่นได้สบาย พื้นที่กว้างมาก","🌄 วิวพระอาทิตย์ตกสวย เป็นจุดชมวิวดีๆ"],
+   review:"⭐ รีวิวจาก Google Maps: บรรยากาศดีมากเหมือนอยู่ต่างประเทศ ทุ่งหญ้า+ภูเขาสวย อากาศดี เหมาะกับครอบครัวและสายธรรมชาติ (อ่านรีวิวฉบับเต็มได้ที่ปุ่มด้านล่าง)",
+   tip:"💡 ทิป: เอาเสื่อปิกนิก/พร็อพถ่ายรูปมาเองได้ ช่วงเย็น 16:30+ แสงสวยสุด",
    link:"https://maps.app.goo.gl/Kd1MViGRA3FgvAoo9?g_st=il", query:"BUCOLIC+Khaoyai" },
 ];
 
@@ -357,10 +446,12 @@ const gradients = [
  'linear-gradient(135deg,#2a9d8f,#0b3d2e),url(https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&q=60&auto=format&fit=crop)'];
 document.getElementById('cards').innerHTML = PLACES.map((p,i)=>`
  <article class="card" id="cafe-${p.id}">
-  <div class="card-top" style="background:${gradients[(p.id-1)%5]};background-size:cover;background-position:center">
+  <div class="card-top" onclick="openModal(${p.id})" style="background:${gradients[(p.id-1)%5]};background-size:cover;background-position:center">
+    <img class="card-photo" src="${p.photos[0]}" alt="${p.name}" loading="lazy" onerror="this.remove()">
     <span class="rank">ตัวเลือกที่ ${i+1} • ห่างที่พัก ${p.km.toFixed(1)} กม.</span>
     <span class="card-emoji">${p.emoji}</span>
-    <h3>${p.name}<small>${p.en}</small></h3>
+    <h3>${p.name}<small>${p.en} • แตะเพื่อดูรูป+รีวิว 🔍</small></h3>
+    <span class="zoom-hint">🔍 แตะดูรายละเอียด</span>
   </div>
   <div class="card-body">
     <p style="font-size:14.5px">${p.desc}</p>
@@ -374,6 +465,9 @@ document.getElementById('cards').innerHTML = PLACES.map((p,i)=>`
     <div class="card-btns">
       <a class="go-maps" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=${HOTEL.lat},${HOTEL.lon}&destination=${encodeURIComponent(p.query)}">🧭 นำทาง</a>
       <a class="go-detail" target="_blank" href="${p.link}">📍 หน้าร้าน Google Maps</a>
+    </div>
+    <div class="card-btns">
+      <a style="background:var(--gold);color:#fff;grid-column:1/-1" href="javascript:void(0)" onclick="openModal(${p.id})">🔍 ดูรูป + รีวิว + แผนที่ร้าน</a>
     </div>
     <div class="card-btns">
       <a style="background:#eef4ec;color:var(--forest)" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination=${encodeURIComponent(p.query)}">📡 จากจุดที่ฉันยืน</a>
@@ -446,6 +540,44 @@ document.getElementById('gmaps-pills').addEventListener('click',e=>{
   if(e.target.dataset && e.target.dataset.id!==undefined) showRoute(e.target.dataset.id);
 });
 showRoute('all');
+
+// ============ DETAIL MODAL (รูป + ข้อมูล + รีวิว + แมพ + เส้นทาง) ============
+let currentModal = null;
+function openModal(id){
+  const p = PLACES.find(x=>x.id===+id); if(!p) return;
+  currentModal = p.id;
+  document.getElementById('m-photo').src = p.photos[0];
+  document.getElementById('m-name').textContent = `${p.emoji} ${p.name}`;
+  document.getElementById('m-en').textContent = `${p.en} • ตัวเลือกที่ ${PLACES.indexOf(p)+1} ห่างที่พัก ${p.km.toFixed(1)} กม.`;
+  document.getElementById('m-thumbs').innerHTML = p.photos.map((s,i)=>
+    `<img src="${s}" class="${i===0?'active':''}" loading="lazy" alt="รูป ${p.name} ${i+1}" onclick="swapPhoto(this,'${s}')" onerror="this.remove()">`).join('');
+  document.getElementById('m-tags').innerHTML = p.tags.map(t=>`<span class="tag">${t}</span>`).join('') +
+    (p.approx?'<span class="tag approx">* หมุดโดยประมาณ</span>':'<span class="tag gold">✓ พิกัดตรงจาก Google</span>');
+  document.getElementById('m-desc').textContent = p.desc;
+  document.getElementById('m-addr').textContent = p.addr;
+  document.getElementById('m-dist').textContent = `${p.km.toFixed(1)} กม. (เส้นตรง) • ขับจริง ~${driveEst(p.km)} กม. • ~${timeEst(p.km)}`;
+  document.getElementById('m-hours').textContent = p.hours;
+  document.getElementById('m-price').textContent = p.price;
+  document.getElementById('m-hl').innerHTML = p.highlights.join('<br>');
+  document.getElementById('m-review').textContent = p.review;
+  document.getElementById('m-tip').textContent = p.tip;
+  document.getElementById('m-map').src = `https://maps.google.com/maps?q=${encodeURIComponent(p.query)}&z=15&output=embed`;
+  document.getElementById('m-nav').href = routeUrl(p);
+  document.getElementById('m-me').href = `https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination=${encodeURIComponent(p.query)}`;
+  document.getElementById('m-gmaps').href = p.link;
+  document.getElementById('modal-backdrop').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function swapPhoto(el,src){
+  document.getElementById('m-photo').src = src;
+  document.querySelectorAll('#m-thumbs img').forEach(i=>i.classList.remove('active'));
+  el.classList.add('active');
+}
+function closeModal(){
+  document.getElementById('modal-backdrop').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
 </script>
 </body>
 </html>
