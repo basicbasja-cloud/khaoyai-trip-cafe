@@ -159,9 +159,25 @@ section{padding:70px 0 10px}
 .map-toolbar>*{pointer-events:auto}
 .map-hint{background:rgba(20,32,26,.9);color:#fff;padding:10px 16px;border-radius:14px;font-size:13px;backdrop-filter:blur(8px)}
 .map-btns{display:flex;gap:8px;flex-wrap:wrap}
-.chip-btn{background:#fff;border:0;padding:10px 15px;border-radius:12px;font-family:inherit;font-weight:600;font-size:13px;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.18);transition:.2s;color:var(--moss2)}
+.chip-btn{background:#fff;border:0;padding:10px 15px;border-radius:12px;font-family:inherit;font-weight:600;font-size:13px;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.18);transition:.2s;color:var(--moss2);min-height:44px}
 .chip-btn:hover{transform:translateY(-2px)}
 .chip-btn.gps{background:var(--blue);color:#fff}
+@media(max-width:640px){
+  .map-toolbar{top:10px;left:10px;right:10px;gap:8px}
+  .map-toolbar .map-hint{font-size:12px;padding:8px 12px;flex:1 1 100%;text-align:center}
+  .map-btns{flex:1 1 100%;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+  .chip-btn{padding:12px 6px;font-size:12.5px;min-height:46px}
+  #map{height:430px}
+  .hero-inner{padding:110px 0 26px}
+  .hero-cards{grid-template-columns:1fr}
+  .ed-photo{height:230px}
+  .ed-body{padding:20px}
+  .ed-body h3{font-size:23px}
+  .route-bar .km{font-size:26px}
+  .modal-hero{height:240px}
+  .gmaps-frame iframe{height:380px}
+  .sec-head{flex-direction:column;align-items:flex-start}
+}
 .legend{display:flex;gap:14px;flex-wrap:wrap;margin:14px 4px 0;font-size:13.5px;color:var(--muted)}
 .legend i{width:12px;height:12px;border-radius:50%;display:inline-block;margin-right:6px}
 .pin{width:38px;height:38px;border-radius:50% 50% 50% 4px;transform:rotate(-45deg);display:grid;place-items:center;font-weight:800;color:#fff;border:3px solid #fff;box-shadow:0 8px 20px rgba(0,0,0,.35);font-size:15px}
@@ -339,6 +355,7 @@ footer .serif{font-size:20px;color:var(--moss2)}
       </div>
     </div>
     <div class="compare-shell reveal"><table class="compare" id="compare-table"></table></div>
+    <p style="font-size:13px;color:var(--muted);margin-top:8px">👉 ตารางกว้าง — ปัดซ้ายเพื่อดูคอลัมน์ “นำทาง”</p>
   </section>
 
   <section id="gmaps-section">
