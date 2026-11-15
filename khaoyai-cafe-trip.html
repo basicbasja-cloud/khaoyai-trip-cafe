@@ -15,12 +15,13 @@
   --ink:#1c2420; --ink2:#3c4a43; --muted:#7a877f;
   --paper:#f7f3ea; --paper2:#efe7d3; --card:#fffdf7;
   --moss:#2e5d43; --moss2:#1d4030; --sage:#9db89a;
-  --gold:#c99a3f; --gold2:#f0d089; --goldsoft:#faf0d7;
+  --gold:#c99a3f; --gold2:#f0d089; --goldsoft:#faf0d7; --goldink:#8a5d00;
   --blue:#1a73e8; --line:#e4d9bd;
   --shadow:0 24px 70px rgba(29,64,48,.16);
   --r:26px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:8px}
 html{scroll-behavior:smooth}
 body{font-family:'Kanit',sans-serif;background:var(--paper);color:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased}
 .serif{font-family:'Fraunces',serif}
@@ -78,7 +79,7 @@ section{padding:70px 0 10px}
 .sec-head h2{font-family:'Fraunces',serif;font-size:clamp(30px,4.5vw,52px);font-weight:900;line-height:1.02;letter-spacing:-.5px}
 .sec-head h2 em{font-style:italic;font-weight:400;color:var(--moss)}
 .sec-head p{color:var(--muted);font-size:15px;margin-top:8px;max-width:560px;line-height:1.7}
-.sec-no{font-family:'Fraunces',serif;font-size:15px;letter-spacing:3px;color:var(--gold);font-weight:700;white-space:nowrap;border:1px solid var(--line);padding:9px 18px;border-radius:100px;background:var(--card)}
+.sec-no{font-family:'Fraunces',serif;font-size:15px;letter-spacing:3px;color:var(--goldink);font-weight:700;white-space:nowrap;border:1px solid var(--line);padding:9px 18px;border-radius:100px;background:var(--card)}
 .hotel-panel{background:var(--moss2);color:#f2ecdb;border-radius:var(--r);padding:28px;box-shadow:var(--shadow);position:relative;overflow:hidden}
 .hotel-panel::before{content:'🏡';position:absolute;right:-10px;bottom:-30px;font-size:150px;opacity:.12}
 .hotel-panel .kicker{color:var(--gold2)}
@@ -225,7 +226,7 @@ footer .serif{font-size:20px;color:var(--moss2)}
 .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 @media(max-width:600px){.info-grid{grid-template-columns:1fr}}
 .info-box{background:#fff;border:1px solid var(--line);border-radius:15px;padding:13px 15px;font-size:13.5px;line-height:1.6}
-.info-box b{color:var(--gold);display:block;font-size:11px;letter-spacing:2px;margin-bottom:3px}
+.info-box b{color:var(--goldink);display:block;font-size:11px;letter-spacing:2px;margin-bottom:3px}
 .hl-list{background:#fff;border:1px solid var(--line);border-radius:15px;padding:15px 17px;font-size:14px;line-height:2}
 .hl-list b{font-family:'Fraunces',serif;font-size:16px}
 .review-box{background:linear-gradient(135deg,#fff8e4,#fbeecb);border:1px solid #ecd9a4;border-radius:15px;padding:15px 17px;font-size:14px;line-height:1.75}
@@ -374,7 +375,7 @@ footer .serif{font-size:20px;color:var(--moss2)}
   <div id="modal" role="dialog" aria-modal="true">
     <div class="modal-hero">
       <button class="modal-close" onclick="closeModal()" aria-label="ปิดหน้าต่าง">✕</button>
-      <img id="m-photo" src="" alt="รูปคาเฟ่" referrerpolicy="no-referrer">
+      <img id="m-photo" src="" alt="รูปคาเฟ่" referrerpolicy="no-referrer" fetchpriority="high">
       <div class="modal-title"><span class="tag" id="m-tag"></span><h2 id="m-name"></h2><p id="m-en"></p></div>
     </div>
     <div class="thumbs" id="m-thumbs"></div>
